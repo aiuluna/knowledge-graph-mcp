@@ -1,28 +1,30 @@
 # Knowledge Graph MCP Server
 
-一个基于 Model Context Protocol (MCP) 的知识图谱服务，为 AI 助手提供知识图谱的创建、管理、分析和可视化能力。本服务完全遵循 MCP 标准，可以与支持 MCP 的 AI 助手（如 Claude）无缝集成。
+A Model Context Protocol (MCP) service for creating, managing, analyzing, and visualizing knowledge graphs. This service fully complies with the MCP standard and seamlessly integrates with MCP-compatible AI assistants (such as Claude).
 
-## 核心特性
+[中文文档](./README.zh-CN.md)
 
-* **多种图谱类型**: 支持拓扑结构、时间线、变更日志、需求文档、知识库、本体论等多种图谱类型
-* **完整的错误处理**: 为常见问题提供清晰的错误信息和处理建议
-* **资源管理**: 支持 SVG 和 Markdown 资源的关联和管理
-* **版本状态**: 支持草稿、已发布、已归档等多种状态管理
+## Core Features
 
-## 安装与配置
+* **Multiple Graph Types**: Support for topology structures, timelines, changelogs, requirement documents, knowledge bases, ontologies, and more
+* **Complete Error Handling**: Clear error messages and handling suggestions for common issues
+* **Resource Management**: Support for SVG and Markdown resource association and management
+* **Version Status**: Support for multiple status management including draft, published, and archived
 
-### 环境要求
+## Installation & Configuration
+
+### Requirements
 - Node.js >= 16.0.0
 - pnpm >= 7.0.0
 
-### 配置知识图谱目录
-创建一个目录用于存储知识图谱数据，例如：
+### Configure Knowledge Graph Directory
+Create a directory to store knowledge graph data, for example:
 ```bash
 mkdir ~/knowledge_graph
 ```
 
-### 在 Cursor 中使用
-将以下配置添加到 Cursor 的配置文件中：
+### Usage in Cursor
+Add the following configuration to your Cursor config file:
 
 ```json
 {
@@ -41,12 +43,12 @@ mkdir ~/knowledge_graph
 }
 ```
 
-注意：
-- 将 `KNOWLEDGE_GRAPH_DIR` 替换为您实际的知识图谱存储目录路径
-- 可以根据需要指定特定的版本号，如 `@0.0.1`
+Note:
+- Replace `KNOWLEDGE_GRAPH_DIR` with your actual knowledge graph storage directory path
+- You can specify a particular version number, such as `@0.0.1`
 
-### 在 Claude Desktop 中使用
-将以下配置添加到 `claude_desktop_config.json` 中：
+### Usage in Claude Desktop
+Add the following configuration to `claude_desktop_config.json`:
 
 ```json
 {
@@ -65,180 +67,180 @@ mkdir ~/knowledge_graph
 }
 ```
 
-## Prompt 使用指南
+## Prompt Usage Guide
 
-### 项目结构
-项目中的 prompt 文件位于 `/src/rules/prompts` 目录下, 请将该文件拷贝到您 cursor 中并添加为 Agent 模式下的默认 rule（具体请参考 [Cursor Rules配置](https://docs.cursor.com/context/rules)）：
+### Project Structure
+Prompt files are located in the `/src/rules/prompts` directory. Please copy these files to your Cursor and add them as default rules for Agent mode (refer to [Cursor Rules Configuration](https://docs.cursor.com/context/rules)):
 ```
 .cursor/
   └── rules/
-      └── graph-query.mdc    # 知识图谱查询的 prompt 文件
+      └── graph-query.mdc    # Knowledge graph query prompt file
 ```
 
-### Agent 模式使用
-在 Cursor 中使用 Agent 模式时，可以通过以下方式触发知识图谱查询：
+### Using Agent Mode
+When using Agent mode in Cursor, you can trigger knowledge graph queries by:
 
-1. 在编辑器中输入 `/ck` 命令
-2. Agent 将自动调用 `@graph-query.mdc` 中定义的 prompt
-3. prompt 会执行以下操作：
-   - 分析当前上下文
-   - 查询相关的知识图谱节点
-   - 生成总结性内容
-   - 将查询结果整合到对话中
+1. Type `/ck` command in the editor
+2. The Agent will automatically invoke the prompt defined in `@graph-query.mdc`
+3. The prompt will:
+   - Analyze current context
+   - Query relevant knowledge graph nodes
+   - Generate summary content
+   - Integrate query results into the conversation
 
-### 其他的 rules
-项目中另有生成手绘风格的 prompt 和生成 markdown 的 prompt 用来生成作为知识图谱的 resources 存储。因 cursor 不支持 prompt 的 mcp 标准，因此本项目使用 tool 的方式获取该规则，您也可以将其与上面的 rules 一样，集成到 cursor 的 rules中去自己修改成期望的风格，并在 cursor Agent 模式下使用。
+### Other Rules
+The project also includes prompts for generating hand-drawn style graphics and Markdown documents as knowledge graph resources. Since Cursor doesn't support the MCP standard for prompts, this project uses tools to obtain these rules. You can also integrate them into Cursor's rules like above and modify them to your desired style for use in Cursor Agent mode.
 
-## 工具列表
+## Tool List
 
-### 图谱管理
+### Graph Management
 
 1. `create_graph`
-   * 创建新的知识图谱
-   * 输入参数：
-     * `name` (string): 图谱名称
-     * `description` (string, 可选): 图谱描述
-     * `type` (string): 图谱类型（topology/timeline/changelog/requirement/kb/ontology）
+   * Create a new knowledge graph
+   * Parameters:
+     * `name` (string): Graph name
+     * `description` (string, optional): Graph description
+     * `type` (string): Graph type (topology/timeline/changelog/requirement/kb/ontology)
 
 2. `list_graphs`
-   * 列出所有知识图谱
-   * 输入参数：
-     * `status` (string, 可选): 按状态筛选（draft/published/archived）
-     * `type` (string, 可选): 按类型筛选
+   * List all knowledge graphs
+   * Parameters:
+     * `status` (string, optional): Filter by status (draft/published/archived)
+     * `type` (string, optional): Filter by type
 
 3. `publish_graph`
-   * 发布知识图谱
-   * 输入参数：
-     * `graphId` (string): 图谱ID
+   * Publish a knowledge graph
+   * Parameters:
+     * `graphId` (string): Graph ID
 
-### 节点管理
+### Node Management
 
 1. `add_node`
-   * 向图谱添加节点
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `type` (string): 节点类型
-     * `name` (string): 节点名称
-     * `description` (string, 可选): 节点描述
-     * `filePath` (string, 可选): 关联文件路径
-     * `metadata` (object, 可选): 节点元数据
+   * Add a node to the graph
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `type` (string): Node type
+     * `name` (string): Node name
+     * `description` (string, optional): Node description
+     * `filePath` (string, optional): Associated file path
+     * `metadata` (object, optional): Node metadata
 
 2. `update_node`
-   * 更新节点信息
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `nodeId` (string): 节点ID
-     * `name` (string, 可选): 新的节点名称
-     * `description` (string, 可选): 新的节点描述
-     * `filePath` (string, 可选): 新的文件路径
-     * `metadata` (object, 可选): 新的元数据
+   * Update node information
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `nodeId` (string): Node ID
+     * `name` (string, optional): New node name
+     * `description` (string, optional): New node description
+     * `filePath` (string, optional): New file path
+     * `metadata` (object, optional): New metadata
 
 3. `delete_node`
-   * 删除节点
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `nodeId` (string): 节点ID
-     * `confirmDelete` (boolean): 删除确认
+   * Delete a node
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `nodeId` (string): Node ID
+     * `confirmDelete` (boolean): Delete confirmation
 
 4. `get_node_details`
-   * 获取节点详细信息
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `nodeId` (string): 节点ID
+   * Get detailed node information
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `nodeId` (string): Node ID
 
-### 边管理
+### Edge Management
 
 1. `add_edge`
-   * 添加边
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `type` (string): 边类型
-     * `sourceId` (string): 源节点ID
-     * `targetId` (string): 目标节点ID
-     * `label` (string, 可选): 边标签
-     * `weight` (number, 可选): 边权重
-     * `metadata` (object, 可选): 边元数据
+   * Add an edge
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `type` (string): Edge type
+     * `sourceId` (string): Source node ID
+     * `targetId` (string): Target node ID
+     * `label` (string, optional): Edge label
+     * `weight` (number, optional): Edge weight
+     * `metadata` (object, optional): Edge metadata
 
 2. `update_edge`
-   * 更新边信息
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `edgeId` (string): 边ID
-     * `label` (string, 可选): 新的边标签
-     * `weight` (number, 可选): 新的边权重
-     * `metadata` (object, 可选): 新的元数据
+   * Update edge information
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `edgeId` (string): Edge ID
+     * `label` (string, optional): New edge label
+     * `weight` (number, optional): New edge weight
+     * `metadata` (object, optional): New metadata
 
 3. `delete_edge`
-   * 删除边
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `edgeId` (string): 边ID
-     * `confirmDelete` (boolean): 删除确认
+   * Delete an edge
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `edgeId` (string): Edge ID
+     * `confirmDelete` (boolean): Delete confirmation
 
-### 资源管理
+### Resource Management
 
 1. `get_creation_guidelines`
-   * 获取资源创建规范
-   * 输入参数：
-     * `type` (string): 规范类型（svg/markdown/all）
+   * Get resource creation guidelines
+   * Parameters:
+     * `type` (string): Guideline type (svg/markdown/all)
 
 2. `save_resource`
-   * 保存资源
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `nodeId` (string, 可选): 关联的节点ID
-     * `resourceType` (string): 资源类型（svg/markdown）
-     * `title` (string): 资源标题
-     * `description` (string, 可选): 资源描述
-     * `content` (string): 资源内容
+   * Save a resource
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `nodeId` (string, optional): Associated node ID
+     * `resourceType` (string): Resource type (svg/markdown)
+     * `title` (string): Resource title
+     * `description` (string, optional): Resource description
+     * `content` (string): Resource content
 
 3. `update_resource`
-   * 更新资源信息
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `resourceId` (string): 资源ID
-     * `name` (string, 可选): 新的资源名称
-     * `title` (string, 可选): 新的资源标题
-     * `description` (string, 可选): 新的资源描述
+   * Update resource information
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `resourceId` (string): Resource ID
+     * `name` (string, optional): New resource name
+     * `title` (string, optional): New resource title
+     * `description` (string, optional): New resource description
 
 4. `delete_resource`
-   * 删除资源
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `resourceId` (string): 资源ID
-     * `confirmDelete` (boolean): 删除确认
+   * Delete a resource
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `resourceId` (string): Resource ID
+     * `confirmDelete` (boolean): Delete confirmation
 
 5. `unlink_resource`
-   * 解除资源与节点的关联
-   * 输入参数：
-     * `graphId` (string): 图谱ID
-     * `nodeId` (string): 节点ID
-     * `resourceId` (string): 资源ID
+   * Unlink a resource from a node
+   * Parameters:
+     * `graphId` (string): Graph ID
+     * `nodeId` (string): Node ID
+     * `resourceId` (string): Resource ID
 
-## 开发
+## Development
 
 ```bash
-# 安装依赖
+# Install dependencies
 pnpm install
 
-# 开发模式
+# Development mode
 pnpm dev
 
-# 构建项目
+# Build project
 pnpm build
 
-# 运行测试
+# Run tests
 pnpm test
 
-# 代码检查
+# Code check
 pnpm lint
 ```
 
-## 错误处理
+## Error Handling
 
-服务使用标准的错误处理机制，所有错误都会被记录到 `md/error_log.txt` 文件中，包含时间戳、错误信息和堆栈跟踪。
+The service uses a standard error handling mechanism. All errors are logged to the `md/error_log.txt` file, including timestamps, error messages, and stack traces.
 
-## 许可证
+## License
 
-本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
