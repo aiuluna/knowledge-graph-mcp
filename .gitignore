@@ -31,4 +31,4 @@ pnpm-debug.log*
 *.swo
 
 # TypeScript
-*.tsbuildinfo 
+*.tsbuildinfo
