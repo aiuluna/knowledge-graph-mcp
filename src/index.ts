@@ -23,13 +23,13 @@ import mdGuidelinesContent from './rules/markdown_document_guidelines.md?raw';
 // 工具定义
 const CREATE_GRAPH_TOOL: Tool = {
   name: "create_graph",
-  description: "创建新的知识图谱。支持多种图谱类型，如拓扑结构、时间线、变更日志、需求文档等。各图谱类型设计指南：\n" +
-    "- topology(组件拓扑结构图)：用于表示系统组件、模块间的依赖关系，建议先创建主要模块节点，再添加组件节点，最后通过边表示调用、依赖、包含等关系\n" +
-    "- timeline(时间线图谱)：用于记录项目重要事件和决策，建议按时间顺序添加事件节点，并链接相关人员和决策\n" +
-    "- changelog(变更日志图谱)：用于追踪功能和组件的变更历史，建议为每个重要变更创建节点，标记变更类型和影响范围\n" +
-    "- requirement(需求文档图谱)：用于需求管理和追踪，建议先创建高层需求，再分解为具体功能点，最后关联到负责人和迭代\n" +
-    "- knowledge_base(知识库图谱)：用于构建领域知识体系，建议从核心概念开始，逐步扩展相关概念和关系\n" +
-    "- ontology(本体论图谱)：用于定义领域概念和关系的形式化表示，适合构建标准化的知识模型",
+  description: "Create a new knowledge graph. Supports multiple graph types such as topology, timeline, changelog, requirement documentation, etc. Design guidelines for each graph type:\n" +
+    "- topology: Used to represent dependencies between system components and modules. Recommended to first create main module nodes, then add component nodes, and finally represent relationships through edges like calls, dependencies, and containment\n" +
+    "- timeline: Used to record important project events and decisions. Recommended to add event nodes in chronological order and link related personnel and decisions\n" +
+    "- changelog: Used to track change history of features and components. Recommended to create nodes for each significant change, marking change types and impact scope\n" +
+    "- requirement: Used for requirement management and tracking. Recommended to first create high-level requirements, then break down into specific features, and finally link to responsible persons and iterations\n" +
+    "- knowledge_base: Used to build domain knowledge systems. Recommended to start from core concepts and gradually expand related concepts and relationships\n" +
+    "- ontology: Used for formal representation of domain concepts and relationships, suitable for building standardized knowledge models",
   inputSchema: {
     type: "object",
     properties: {
@@ -38,7 +38,7 @@ const CREATE_GRAPH_TOOL: Tool = {
       type: {
         type: "string",
         enum: Object.values(GraphType),
-        description: "图谱类型。topology:组件拓扑结构图,timeline:时间线图谱,changelog:变更日志图谱,requirement:需求文档图谱,knowledge_base:知识库图谱,ontology:本体论图谱"
+        description: "Graph type. topology:Component topology diagram, timeline:Timeline graph, changelog:Change log graph, requirement:Requirement documentation graph, knowledge_base:Knowledge base graph, ontology:Ontology graph"
       }
     },
     required: ["name"]
@@ -47,7 +47,7 @@ const CREATE_GRAPH_TOOL: Tool = {
 
 const ADD_NODE_TOOL: Tool = {
   name: "add_node",
-  description: "向知识图谱添加节点。节点是图谱的基本单元，不同类型的图谱支持不同类型的节点。",
+  description: "Add a node to the knowledge graph. Nodes are the basic units of the graph, and different types of graphs support different types of nodes.",
   inputSchema: {
     type: "object",
     properties: {
@@ -55,7 +55,7 @@ const ADD_NODE_TOOL: Tool = {
       type: {
         type: "string",
         enum: Object.values(NodeType),
-        description: "节点类型。组件拓扑图:component/module/service/data/api/concept/resource, 时间线图谱:event/decision/iteration/person, 变更日志:change/feature/component/iteration/person, 需求文档:requirement/feature/component/iteration/person/decision"
+        description: "Node type. Topology graph:component/module/service/data/api/concept/resource, Timeline graph:event/decision/iteration/person, Changelog:change/feature/component/iteration/person, Requirement doc:requirement/feature/component/iteration/person/decision"
       },
       name: { type: "string" },
       description: { type: "string" },
@@ -107,24 +107,24 @@ const ADD_EDGE_TOOL: Tool = {
 
 const PUBLISH_GRAPH_TOOL: Tool = {
   name: "publish_graph",
-  description: "发布知识图谱，将图谱状态从草稿变更为已发布。发布后的图谱仍然可以修改，但建议通过版本管理跟踪重要变更。\n" +
-    "使用前提：\n" +
-    "1. 图谱必须存在且处于草稿状态\n" +
-    "2. 建议在发布前确保图谱内容完整\n" +
-    "3. 确保所有必要的节点和边都已添加\n\n" +
-    "使用建议：\n" +
-    "1. 先使用list_graphs检查图谱的当前状态\n" +
-    "2. 使用get_node_details检查关键节点的完整性\n" +
-    "3. 在发布前对图谱结构进行最后审查\n" +
-    "4. 记录发布时间，用于版本管理\n" +
-    "5. 发布后及时通知相关团队成员\n\n" +
-    "返回数据：\n" +
-    "- data: 发布后的图谱信息\n" +
-    "  * id: 图谱ID\n" +
-    "  * name: 图谱名称\n" +
-    "  * type: 图谱类型\n" +
-    "  * status: 已发布\n" +
-    "  * publishedAt: 发布时间",
+  description: "Publish a knowledge graph, changing its status from draft to published. Published graphs can still be modified, but it's recommended to track important changes through version management.\n" +
+    "Prerequisites:\n" +
+    "1. Graph must exist and be in draft status\n" +
+    "2. Recommended to ensure graph content is complete before publishing\n" +
+    "3. Ensure all necessary nodes and edges have been added\n\n" +
+    "Usage recommendations:\n" +
+    "1. First use list_graphs to check the current status of the graph\n" +
+    "2. Use get_node_details to check the completeness of key nodes\n" +
+    "3. Review the graph structure before publishing\n" +
+    "4. Record publication time for version management\n" +
+    "5. Notify relevant team members after publication\n\n" +
+    "Return data:\n" +
+    "- data: Published graph information\n" +
+    "  * id: Graph ID\n" +
+    "  * name: Graph name\n" +
+    "  * type: Graph type\n" +
+    "  * status: Published\n" +
+    "  * publishedAt: Publication time",
   inputSchema: {
     type: "object",
     properties: {
@@ -136,54 +136,54 @@ const PUBLISH_GRAPH_TOOL: Tool = {
 
 const LIST_GRAPHS_TOOL: Tool = {
   name: "list_graphs",
-  description: "列出所有知识图谱，支持按状态和类型筛选。这是获取已有图谱信息的主要工具，也是获取节点ID的重要途径。\n" +
-    "使用场景：\n" +
-    "1. 查看所有可用的图谱及其基本信息\n" +
-    "2. 获取特定图谱的节点列表，用于后续的边添加或节点详情查询\n" +
-    "3. 按状态筛选图谱，如查看所有草稿或已发布的图谱\n" +
-    "4. 按类型筛选图谱，如只查看拓扑图或时间线图谱\n\n" +
-    "使用建议：\n" +
-    "1. 首先调用此工具获取图谱列表和节点信息\n" +
-    "2. 从返回的数据中获取需要的图谱ID和节点ID\n" +
-    "3. 使用这些ID调用其他工具（如add_edge、get_node_details）\n" +
-    "4. 建议在进行任何节点或边操作前，先用此工具确认目标图谱的状态\n\n" +
-    "返回数据：\n" +
-    "- data: 图谱列表，每个图谱包含：\n" +
-    "  * id: 图谱ID（用于其他工具的graphId参数）\n" +
-    "  * name: 图谱名称\n" +
-    "  * description: 图谱描述\n" +
-    "  * type: 图谱类型\n" +
-    "  * status: 图谱状态\n" +
-    "  * nodesCount: 节点数量\n" +
-    "  * edgesCount: 边数量\n" +
-    "  * createdAt: 创建时间\n" +
-    "  * updatedAt: 更新时间\n" +
-    "  * publishedAt: 发布时间（如果已发布）\n" +
-    "  * nodes: 节点列表，每个节点包含：\n" +
-    "    - id: 节点ID（用于add_edge和get_node_details等工具）\n" +
-    "    - name: 节点名称\n" +
-    "    - type: 节点类型",
+  description: "List all knowledge graphs with support for filtering by status and type. This is the main tool for getting information about existing graphs and an important path for obtaining node IDs.\n" +
+    "Use cases:\n" +
+    "1. View all available graphs and their basic information\n" +
+    "2. Get the node list of a specific graph for subsequent edge addition or node detail queries\n" +
+    "3. Filter graphs by status, such as viewing all drafts or published graphs\n" +
+    "4. Filter graphs by type, such as viewing only topology or timeline graphs\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call this tool to get the graph list and node information\n" +
+    "2. Get the required graph ID and node ID from the returned data\n" +
+    "3. Use these IDs to call other tools (like add_edge, get_node_details)\n" +
+    "4. Recommended to use this tool to confirm the target graph's status before performing any node or edge operations\n\n" +
+    "Return data:\n" +
+    "- data: List of graphs, each graph contains:\n" +
+    "  * id: Graph ID (used for graphId parameter in other tools)\n" +
+    "  * name: Graph name\n" +
+    "  * description: Graph description\n" +
+    "  * type: Graph type\n" +
+    "  * status: Graph status\n" +
+    "  * nodesCount: Number of nodes\n" +
+    "  * edgesCount: Number of edges\n" +
+    "  * createdAt: Creation time\n" +
+    "  * updatedAt: Update time\n" +
+    "  * publishedAt: Publication time (if published)\n" +
+    "  * nodes: Node list, each node contains:\n" +
+    "    - id: Node ID (used for add_edge and get_node_details tools)\n" +
+    "    - name: Node name\n" +
+    "    - type: Node type",
   inputSchema: {
     type: "object",
     properties: {
       status: {
         type: "string",
         enum: Object.values(GraphStatus),
-        description: "图谱状态筛选：\n" +
-          "- draft: 草稿状态，可以自由修改\n" +
-          "- published: 已发布状态，建议通过版本管理跟踪变更\n" +
-          "- archived: 已归档状态，不建议修改"
+        description: "Graph status filter:\n" +
+          "- draft: Draft status, can be freely modified\n" +
+          "- published: Published status, recommended to track changes through version management\n" +
+          "- archived: Archived status, modifications not recommended"
       },
       type: {
         type: "string",
         enum: Object.values(GraphType),
-        description: "图谱类型筛选：\n" +
-          "- topology: 组件拓扑结构图\n" +
-          "- timeline: 时间线图谱\n" +
-          "- changelog: 变更日志图谱\n" +
-          "- requirement: 需求文档图谱\n" +
-          "- knowledge_base: 知识库图谱\n" +
-          "- ontology: 本体论图谱"
+        description: "Graph type filter:\n" +
+          "- topology: Component topology diagram\n" +
+          "- timeline: Timeline graph\n" +
+          "- changelog: Change log graph\n" +
+          "- requirement: Requirement documentation graph\n" +
+          "- knowledge_base: Knowledge base graph\n" +
+          "- ontology: Ontology graph"
       }
     }
   }
@@ -191,43 +191,43 @@ const LIST_GRAPHS_TOOL: Tool = {
 
 const GET_NODE_DETAILS_TOOL: Tool = {
   name: "get_node_details",
-  description: "获取图谱中特定节点的详细信息。此工具需要配合list_graphs工具使用，因为nodeId必须从list_graphs的返回结果中获取。\n" +
-    "使用场景：\n" +
-    "1. 查看节点的完整属性信息\n" +
-    "2. 检查节点关联的资源（SVG/Markdown）\n" +
-    "3. 分析节点与其他节点的关系网络\n" +
-    "4. 在修改节点前查看当前状态\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱的节点列表\n" +
-    "2. 从返回的nodes数组中获取需要的nodeId\n" +
-    "3. 使用获取到的graphId和nodeId调用本工具\n" +
-    "4. 检查返回的关系数据，确定是否需要进一步操作\n\n" +
-    "返回数据：\n" +
-    "- data: 节点详细信息\n" +
-    "  * id: 节点ID\n" +
-    "  * name: 节点名称\n" +
-    "  * type: 节点类型\n" +
-    "  * description: 节点描述\n" +
-    "  * filePath: 关联文件路径\n" +
-    "  * metadata: 节点元数据\n" +
-    "  * resources: 关联资源列表\n" +
-    "    - id: 资源ID\n" +
-    "    - type: 资源类型(svg/markdown)\n" +
-    "    - title: 资源标题\n" +
-    "  * relationships: 关系列表\n" +
-    "    - id: 边ID\n" +
-    "    - type: 边类型\n" +
-    "    - targetNode: 目标节点信息",
+  description: "Get detailed information about a specific node in the graph. This tool must be used in conjunction with the list_graphs tool, as the nodeId must be obtained from the list_graphs response.\n" +
+    "Use cases:\n" +
+    "1. View complete node attributes\n" +
+    "2. Check associated resources (SVG/Markdown)\n" +
+    "3. Analyze node relationships with others\n" +
+    "4. Check current state before modifying a node\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get the node list of the target graph\n" +
+    "2. Get the required nodeId from the returned nodes array\n" +
+    "3. Use the obtained graphId and nodeId to call this tool\n" +
+    "4. Check the returned relationship data to determine if further action is needed\n\n" +
+    "Return data:\n" +
+    "- data: Node details\n" +
+    "  * id: Node ID\n" +
+    "  * name: Node name\n" +
+    "  * type: Node type\n" +
+    "  * description: Node description\n" +
+    "  * filePath: Associated file path\n" +
+    "  * metadata: Node metadata\n" +
+    "  * resources: Associated resource list\n" +
+    "    - id: Resource ID\n" +
+    "    - type: Resource type (svg/markdown)\n" +
+    "    - title: Resource title\n" +
+    "  * relationships: Relationship list\n" +
+    "    - id: Edge ID\n" +
+    "    - type: Edge type\n" +
+    "    - targetNode: Target node information",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs response"
       },
       nodeId: {
         type: "string",
-        description: "节点ID，必须从list_graphs返回的nodes数组中获取"
+        description: "Node ID, must be obtained from the nodes array in list_graphs response"
       }
     },
     required: ["graphId", "nodeId"]
@@ -236,35 +236,35 @@ const GET_NODE_DETAILS_TOOL: Tool = {
 
 const GET_CREATION_GUIDELINES_TOOL: Tool = {
   name: "get_creation_guidelines",
-  description: "获取SVG图形和Markdown文档的创建规范和指南。此工具是save_resource工具的前置工具，必须在创建和保存任何资源前调用。\n" +
-    "使用场景：\n" +
-    "1. 创建SVG可视化图形前获取绘制规范\n" +
-    "2. 创建Markdown文档前获取格式要求\n" +
-    "3. 批量创建资源前获取完整规范\n\n" +
-    "使用建议：\n" +
-    "1. 在开始任何资源创建前，先调用此工具获取规范\n" +
-    "2. 仔细阅读并遵循规范中的命名规则和目录结构\n" +
-    "3. 根据规范创建资源后，使用save_resource工具保存\n" +
-    "4. 建议将规范保存下来，供团队成员参考\n\n" +
-    "返回数据：\n" +
-    "- data: 规范内容\n" +
-    "  * guidelines: 规范文本内容\n" +
-    "    - 文件命名规则\n" +
-    "    - 目录结构要求\n" +
-    "    - 格式规范\n" +
-    "    - 样式指南\n" +
-    "  * type: 规范类型（svg/markdown/all）\n" +
-    "  * version: 规范版本",
+  description: "Get creation guidelines and standards for SVG graphics and Markdown documents. This tool is a prerequisite for the save_resource tool and must be called before creating and saving any resources.\n" +
+    "Use cases:\n" +
+    "1. Get drawing standards before creating SVG visualizations\n" +
+    "2. Get format requirements before creating Markdown documents\n" +
+    "3. Get complete guidelines before batch resource creation\n\n" +
+    "Usage recommendations:\n" +
+    "1. Call this tool before starting any resource creation\n" +
+    "2. Carefully read and follow the naming rules and directory structure\n" +
+    "3. Create resources according to guidelines, then use save_resource tool\n" +
+    "4. Recommended to save guidelines for team reference\n\n" +
+    "Return data:\n" +
+    "- data: Guidelines content\n" +
+    "  * guidelines: Guidelines text content\n" +
+    "    - File naming rules\n" +
+    "    - Directory structure requirements\n" +
+    "    - Format specifications\n" +
+    "    - Style guide\n" +
+    "  * type: Guidelines type (svg/markdown/all)\n" +
+    "  * version: Guidelines version",
   inputSchema: {
     type: "object",
     properties: {
       type: {
         type: "string",
         enum: ["svg", "markdown", "all"],
-        description: "规范类型：\n" +
-          "- svg: SVG图形创建规范，包含绘制风格、命名规则等\n" +
-          "- markdown: Markdown文档规范，包含格式要求、目录结构等\n" +
-          "- all: 获取所有规范（推荐）"
+        description: "Guidelines type:\n" +
+          "- svg: SVG graphics creation guidelines, including drawing style, naming rules, etc.\n" +
+          "- markdown: Markdown document guidelines, including format requirements, directory structure, etc.\n" +
+          "- all: Get all guidelines (recommended)"
       }
     },
     required: ["type"]
@@ -273,54 +273,54 @@ const GET_CREATION_GUIDELINES_TOOL: Tool = {
 
 const SAVE_RESOURCE_TOOL: Tool = {
   name: "save_resource",
-  description: "保存AI创建的SVG图形或Markdown文档到知识图谱。此工具需要配合get_creation_guidelines和list_graphs工具使用。\n" +
-    "使用场景：\n" +
-    "1. 保存图谱的SVG可视化表示\n" +
-    "2. 保存节点相关的Markdown文档\n" +
-    "3. 批量保存多个资源文件\n\n" +
-    "使用建议：\n" +
-    "1. 先调用get_creation_guidelines获取资源创建规范\n" +
-    "2. 使用list_graphs获取目标图谱ID和节点ID（如需关联到节点）\n" +
-    "3. 按规范创建资源内容\n" +
-    "4. 使用本工具保存资源\n" +
-    "5. 保存后可使用get_node_details查看资源关联状态\n\n" +
-    "返回数据：\n" +
-    "- data: 保存的资源信息\n" +
-    "  * id: 资源ID\n" +
-    "  * type: 资源类型（svg/markdown）\n" +
-    "  * title: 资源标题\n" +
-    "  * description: 资源描述\n" +
-    "  * nodeId: 关联的节点ID（如果有）\n" +
-    "  * createdAt: 创建时间",
+  description: "Save AI-generated SVG graphics or Markdown documents to the knowledge graph. This tool must be used in conjunction with get_creation_guidelines and list_graphs tools.\n" +
+    "Use cases:\n" +
+    "1. Save SVG visualization representation of the graph\n" +
+    "2. Save Markdown documents related to nodes\n" +
+    "3. Batch save multiple resource files\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call get_creation_guidelines to get resource creation standards\n" +
+    "2. Use list_graphs to get target graph ID and node ID (if needed)\n" +
+    "3. Create resource content according to standards\n" +
+    "4. Use this tool to save the resource\n" +
+    "5. After saving, use get_node_details to check resource association status\n\n" +
+    "Return data:\n" +
+    "- data: Saved resource information\n" +
+    "  * id: Resource ID\n" +
+    "  * type: Resource type (svg/markdown)\n" +
+    "  * title: Resource title\n" +
+    "  * description: Resource description\n" +
+    "  * nodeId: Associated node ID (if any)\n" +
+    "  * createdAt: Creation time",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
-      },
-      nodeId: {
-        type: "string",
-        description: "关联的节点ID（可选），如果提供则必须从list_graphs的nodes数组中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       resourceType: {
         type: "string",
         enum: ["svg", "markdown"],
-        description: "资源类型：\n" +
-          "- svg: SVG图形文件\n" +
-          "- markdown: Markdown文档"
+        description: "Resource type:\n" +
+          "- svg: SVG graphics file\n" +
+          "- markdown: Markdown document"
       },
       title: {
         type: "string",
-        description: "资源标题，必须符合get_creation_guidelines中的命名规范"
-      },
-      description: {
-        type: "string",
-        description: "资源描述（可选）"
+        description: "Resource title, must comply with naming rules in get_creation_guidelines"
       },
       content: {
         type: "string",
-        description: "资源内容，必须符合get_creation_guidelines中的格式规范"
+        description: "Resource content, must comply with format specifications in get_creation_guidelines"
+      },
+      description: {
+        type: "string",
+        description: "Resource description (optional)"
+      },
+      nodeId: {
+        type: "string",
+        description: "Associated node ID (optional), if provided must be obtained from nodes array in list_graphs"
       }
     },
     required: ["graphId", "resourceType", "title", "content"]
@@ -363,51 +363,51 @@ const DELETE_GRAPH_TOOL: Tool = {
 
 const UPDATE_NODE_TOOL: Tool = {
   name: "update_node",
-  description: "修改知识图谱中的节点。此工具需要配合list_graphs和get_node_details工具使用。\n" +
-    "使用场景：\n" +
-    "1. 更新节点的基本信息（名称、描述等）\n" +
-    "2. 更新节点关联的文件路径\n" +
-    "3. 更新节点的元数据信息\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱和节点ID\n" +
-    "2. 使用get_node_details查看节点当前状态\n" +
-    "3. 只更新需要修改的字段，其他字段保持不变\n" +
-    "4. 更新后可再次调用get_node_details确认修改\n\n" +
-    "返回数据：\n" +
-    "- data: 更新后的节点信息\n" +
-    "  * id: 节点ID\n" +
-    "  * name: 节点名称\n" +
-    "  * type: 节点类型\n" +
-    "  * description: 节点描述\n" +
-    "  * filePath: 关联文件路径\n" +
-    "  * metadata: 节点元数据\n" +
-    "  * updatedAt: 更新时间",
+  description: "Modify nodes in the knowledge graph. This tool must be used in conjunction with list_graphs and get_node_details tools.\n" +
+    "Use cases:\n" +
+    "1. Update basic node information (name, description, etc.)\n" +
+    "2. Update file paths associated with nodes\n" +
+    "3. Update node metadata information\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get target graph and node ID\n" +
+    "2. Use get_node_details to check current node status\n" +
+    "3. Only update fields that need to be modified, keep others unchanged\n" +
+    "4. After updating, call get_node_details again to confirm changes\n\n" +
+    "Return data:\n" +
+    "- data: Updated node information\n" +
+    "  * id: Node ID\n" +
+    "  * name: Node name\n" +
+    "  * type: Node type\n" +
+    "  * description: Node description\n" +
+    "  * filePath: Associated file path\n" +
+    "  * metadata: Node metadata\n" +
+    "  * updatedAt: Update time",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       nodeId: {
         type: "string",
-        description: "节点ID，必须从list_graphs的nodes数组中获取"
+        description: "Node ID, must be obtained from nodes array in list_graphs"
       },
       name: {
         type: "string",
-        description: "新的节点名称（可选）"
+        description: "New node name (optional)"
       },
       description: {
         type: "string",
-        description: "新的节点描述（可选）"
+        description: "New node description (optional)"
       },
       filePath: {
         type: "string",
-        description: "新的关联文件路径（可选）"
+        description: "New associated file path (optional)"
       },
       metadata: {
         type: "object",
-        description: "新的节点元数据（可选）"
+        description: "New node metadata (optional)"
       }
     },
     required: ["graphId", "nodeId"]
@@ -416,48 +416,48 @@ const UPDATE_NODE_TOOL: Tool = {
 
 const UPDATE_EDGE_TOOL: Tool = {
   name: "update_edge",
-  description: "修改知识图谱中的边。此工具需要配合list_graphs和get_node_details工具使用。\n" +
-    "使用场景：\n" +
-    "1. 更新边的标签信息\n" +
-    "2. 调整边的权重值\n" +
-    "3. 更新边的元数据信息\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱信息\n" +
-    "2. 使用get_node_details查看相关节点的边列表\n" +
-    "3. 只更新需要修改的字段，其他字段保持不变\n" +
-    "4. 更新后可再次调用get_node_details确认修改\n\n" +
-    "返回数据：\n" +
-    "- data: 更新后的边信息\n" +
-    "  * id: 边ID\n" +
-    "  * type: 边类型\n" +
-    "  * sourceId: 源节点ID\n" +
-    "  * targetId: 目标节点ID\n" +
-    "  * label: 边标签\n" +
-    "  * weight: 边权重\n" +
-    "  * metadata: 边元数据\n" +
-    "  * updatedAt: 更新时间",
+  description: "Modify edges in the knowledge graph. This tool must be used in conjunction with list_graphs and get_node_details tools.\n" +
+    "Use cases:\n" +
+    "1. Update edge label information\n" +
+    "2. Adjust edge weight values\n" +
+    "3. Update edge metadata information\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get target graph information\n" +
+    "2. Use get_node_details to view edge list of related nodes\n" +
+    "3. Only update fields that need to be modified, keep others unchanged\n" +
+    "4. After updating, call get_node_details again to confirm changes\n\n" +
+    "Return data:\n" +
+    "- data: Updated edge information\n" +
+    "  * id: Edge ID\n" +
+    "  * type: Edge type\n" +
+    "  * sourceId: Source node ID\n" +
+    "  * targetId: Target node ID\n" +
+    "  * label: Edge label\n" +
+    "  * weight: Edge weight\n" +
+    "  * metadata: Edge metadata\n" +
+    "  * updatedAt: Update time",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       edgeId: {
         type: "string",
-        description: "边ID，必须从get_node_details的relationships数组中获取"
+        description: "Edge ID, must be obtained from relationships array in get_node_details"
       },
       label: {
         type: "string",
-        description: "新的边标签（可选）"
+        description: "New edge label (optional)"
       },
       weight: {
         type: "number",
-        description: "新的边权重（可选），用于表示关系的强弱程度"
+        description: "New edge weight (optional), used to represent relationship strength"
       },
       metadata: {
         type: "object",
-        description: "新的边元数据（可选）"
+        description: "New edge metadata (optional)"
       }
     },
     required: ["graphId", "edgeId"]
@@ -466,40 +466,40 @@ const UPDATE_EDGE_TOOL: Tool = {
 
 const DELETE_NODE_TOOL: Tool = {
   name: "delete_node",
-  description: "删除知识图谱中的节点。此工具需要配合list_graphs工具使用，且操作不可撤销。\n" +
-    "使用场景：\n" +
-    "1. 删除错误创建的节点\n" +
-    "2. 删除不再需要的节点\n" +
-    "3. 重构图谱结构时删除冗余节点\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱和节点信息\n" +
-    "2. 使用get_node_details检查节点的关联资源和关系\n" +
-    "3. 确认删除不会影响其他重要节点\n" +
-    "4. 设置confirmDelete为true以确认删除\n" +
-    "5. 建议在删除前备份重要数据\n\n" +
-    "注意事项：\n" +
-    "- 删除节点会同时删除与该节点相关的所有边\n" +
-    "- 如果节点有关联的资源，资源不会被删除，但会解除关联\n\n" +
-    "返回数据：\n" +
-    "- data: 删除结果\n" +
-    "  * id: 被删除的节点ID\n" +
-    "  * name: 节点名称\n" +
-    "  * type: 节点类型\n" +
-    "  * deletedAt: 删除时间",
+  description: "Delete nodes from the knowledge graph. This tool must be used in conjunction with list_graphs tool, and the operation cannot be undone.\n" +
+    "Use cases:\n" +
+    "1. Delete incorrectly created nodes\n" +
+    "2. Delete nodes that are no longer needed\n" +
+    "3. Delete redundant nodes when restructuring the graph\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get target graph and node information\n" +
+    "2. Use get_node_details to check node's associated resources and relationships\n" +
+    "3. Confirm deletion won't affect other important nodes\n" +
+    "4. Set confirmDelete to true to confirm deletion\n" +
+    "5. Recommended to backup important data before deletion\n\n" +
+    "Important notes:\n" +
+    "- Deleting a node will also delete all edges related to that node\n" +
+    "- If the node has associated resources, they won't be deleted but will be unlinked\n\n" +
+    "Return data:\n" +
+    "- data: Deletion result\n" +
+    "  * id: Deleted node ID\n" +
+    "  * name: Node name\n" +
+    "  * type: Node type\n" +
+    "  * deletedAt: Deletion time",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       nodeId: {
         type: "string",
-        description: "节点ID，必须从list_graphs的nodes数组中获取"
+        description: "Node ID, must be obtained from nodes array in list_graphs"
       },
       confirmDelete: {
         type: "boolean",
-        description: "确认删除，必须设置为true，这是一个安全措施，防止误删除"
+        description: "Confirm deletion, must be set to true, this is a safety measure to prevent accidental deletion"
       }
     },
     required: ["graphId", "nodeId", "confirmDelete"]
@@ -508,37 +508,37 @@ const DELETE_NODE_TOOL: Tool = {
 
 const DELETE_EDGE_TOOL: Tool = {
   name: "delete_edge",
-  description: "删除知识图谱中的边。此工具需要配合list_graphs和get_node_details工具使用，且操作不可撤销。\n" +
-    "使用场景：\n" +
-    "1. 删除错误创建的关系\n" +
-    "2. 更新节点之间的关系结构\n" +
-    "3. 重构图谱时清理冗余关系\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱信息\n" +
-    "2. 使用get_node_details获取边的详细信息\n" +
-    "3. 确认删除不会破坏重要的关系结构\n" +
-    "4. 设置confirmDelete为true以确认删除\n\n" +
-    "注意事项：\n" +
-    "- 删除边不会影响相关的节点\n" +
-    "- 删除后需要重新调用get_node_details查看更新后的关系\n\n" +
-    "返回数据：\n" +
-    "- data: 删除结果\n" +
-    "  * id: 被删除的边ID\n" +
-    "  * deletedAt: 删除时间",
+  description: "Delete edges from the knowledge graph. This tool must be used in conjunction with list_graphs and get_node_details tools, and the operation cannot be undone.\n" +
+    "Use cases:\n" +
+    "1. Delete incorrectly created relationships\n" +
+    "2. Update relationship structure between nodes\n" +
+    "3. Clean up redundant relationships when restructuring the graph\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get target graph information\n" +
+    "2. Use get_node_details to get edge details\n" +
+    "3. Confirm deletion won't break important relationship structures\n" +
+    "4. Set confirmDelete to true to confirm deletion\n\n" +
+    "Important notes:\n" +
+    "- Deleting edges won't affect related nodes\n" +
+    "- Need to call get_node_details again to view updated relationships\n\n" +
+    "Return data:\n" +
+    "- data: Deletion result\n" +
+    "  * id: Deleted edge ID\n" +
+    "  * deletedAt: Deletion time",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       edgeId: {
         type: "string",
-        description: "边ID，必须从get_node_details的relationships数组中获取"
+        description: "Edge ID, must be obtained from relationships array in get_node_details"
       },
       confirmDelete: {
         type: "boolean",
-        description: "确认删除，必须设置为true，这是一个安全措施，防止误删除"
+        description: "Confirm deletion, must be set to true, this is a safety measure to prevent accidental deletion"
       }
     },
     required: ["graphId", "edgeId", "confirmDelete"]
@@ -547,45 +547,45 @@ const DELETE_EDGE_TOOL: Tool = {
 
 const UPDATE_RESOURCE_TOOL: Tool = {
   name: "update_resource",
-  description: "更新知识图谱中的资源信息。此工具需要配合list_graphs和get_node_details工具使用。\n" +
-    "使用场景：\n" +
-    "1. 修改资源的标题或描述\n" +
-    "2. 更新资源的元数据信息\n" +
-    "3. 完善资源的文档说明\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱信息\n" +
-    "2. 使用get_node_details查看资源当前信息\n" +
-    "3. 只更新需要修改的字段\n" +
-    "4. 保持资源命名的一致性\n\n" +
-    "返回数据：\n" +
-    "- data: 更新后的资源信息\n" +
-    "  * id: 资源ID\n" +
-    "  * name: 资源名称\n" +
-    "  * title: 资源标题\n" +
-    "  * description: 资源描述\n" +
-    "  * updatedAt: 更新时间",
+  description: "Update resource information in the knowledge graph. This tool must be used in conjunction with list_graphs and get_node_details tools.\n" +
+    "Use cases:\n" +
+    "1. Modify resource title or description\n" +
+    "2. Update resource metadata information\n" +
+    "3. Improve resource documentation\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get target graph information\n" +
+    "2. Use get_node_details to check current resource information\n" +
+    "3. Only update fields that need to be modified\n" +
+    "4. Maintain consistency in resource naming\n\n" +
+    "Return data:\n" +
+    "- data: Updated resource information\n" +
+    "  * id: Resource ID\n" +
+    "  * name: Resource name\n" +
+    "  * title: Resource title\n" +
+    "  * description: Resource description\n" +
+    "  * updatedAt: Update time",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       resourceId: {
         type: "string",
-        description: "资源ID，必须从get_node_details的resources数组中获取"
+        description: "Resource ID, must be obtained from resources array in get_node_details"
       },
       name: {
         type: "string",
-        description: "新的资源名称（可选）"
+        description: "New resource name (optional)"
       },
       title: {
         type: "string",
-        description: "新的资源标题（可选）"
+        description: "New resource title (optional)"
       },
       description: {
         type: "string",
-        description: "新的资源描述（可选）"
+        description: "New resource description (optional)"
       }
     },
     required: ["graphId", "resourceId"]
@@ -594,40 +594,40 @@ const UPDATE_RESOURCE_TOOL: Tool = {
 
 const DELETE_RESOURCE_TOOL: Tool = {
   name: "delete_resource",
-  description: "删除知识图谱中的资源。此工具需要配合list_graphs和get_node_details工具使用，且操作不可撤销。\n" +
-    "使用场景：\n" +
-    "1. 删除过时的资源文件\n" +
-    "2. 清理不再需要的文档\n" +
-    "3. 移除错误创建的资源\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱信息\n" +
-    "2. 使用get_node_details确认资源的关联关系\n" +
-    "3. 确认删除不会影响其他节点\n" +
-    "4. 设置confirmDelete为true以确认删除\n" +
-    "5. 建议在删除前备份重要资源\n\n" +
-    "注意事项：\n" +
-    "- 删除资源会同时删除物理文件\n" +
-    "- 会自动解除与所有节点的关联\n" +
-    "- 此操作不可恢复\n\n" +
-    "返回数据：\n" +
-    "- data: 删除结果\n" +
-    "  * id: 被删除的资源ID\n" +
-    "  * type: 资源类型\n" +
-    "  * deletedAt: 删除时间",
+  description: "Delete resources from the knowledge graph. This tool must be used in conjunction with list_graphs and get_node_details tools, and the operation cannot be undone.\n" +
+    "Use cases:\n" +
+    "1. Delete outdated resource files\n" +
+    "2. Clean up unnecessary documents\n" +
+    "3. Remove incorrectly created resources\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get target graph information\n" +
+    "2. Use get_node_details to confirm resource associations\n" +
+    "3. Confirm deletion won't affect other nodes\n" +
+    "4. Set confirmDelete to true to confirm deletion\n" +
+    "5. Recommended to backup important resources before deletion\n\n" +
+    "Important notes:\n" +
+    "- Deleting a resource will also delete the physical file\n" +
+    "- Will automatically unlink from all nodes\n" +
+    "- This operation cannot be recovered\n\n" +
+    "Return data:\n" +
+    "- data: Deletion result\n" +
+    "  * id: Deleted resource ID\n" +
+    "  * type: Resource type\n" +
+    "  * deletedAt: Deletion time",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       resourceId: {
         type: "string",
-        description: "资源ID，必须从get_node_details的resources数组中获取"
+        description: "Resource ID, must be obtained from resources array in get_node_details"
       },
       confirmDelete: {
         type: "boolean",
-        description: "确认删除，必须设置为true，这是一个安全措施，防止误删除"
+        description: "Confirm deletion, must be set to true, this is a safety measure to prevent accidental deletion"
       }
     },
     required: ["graphId", "resourceId", "confirmDelete"]
@@ -636,39 +636,39 @@ const DELETE_RESOURCE_TOOL: Tool = {
 
 const UNLINK_RESOURCE_TOOL: Tool = {
   name: "unlink_resource",
-  description: "解除资源与节点的关联关系。此工具需要配合list_graphs和get_node_details工具使用。\n" +
-    "使用场景：\n" +
-    "1. 调整资源的关联关系\n" +
-    "2. 移除错误的资源关联\n" +
-    "3. 重组节点的资源结构\n\n" +
-    "使用建议：\n" +
-    "1. 先调用list_graphs获取目标图谱信息\n" +
-    "2. 使用get_node_details查看节点的资源关联\n" +
-    "3. 确认解除关联不会影响其他功能\n" +
-    "4. 记录变更以便需要时重新关联\n\n" +
-    "注意事项：\n" +
-    "- 只解除关联，不删除资源\n" +
-    "- 资源仍然可以被其他节点使用\n" +
-    "- 可以随时重新建立关联\n\n" +
-    "返回数据：\n" +
-    "- data: 操作结果\n" +
-    "  * resourceId: 资源ID\n" +
-    "  * nodeId: 节点ID\n" +
-    "  * unlinkedAt: 解除关联时间",
+  description: "Unlink resource associations from nodes. This tool must be used in conjunction with list_graphs and get_node_details tools.\n" +
+    "Use cases:\n" +
+    "1. Adjust resource associations\n" +
+    "2. Remove incorrect resource associations\n" +
+    "3. Reorganize node resource structure\n\n" +
+    "Usage recommendations:\n" +
+    "1. First call list_graphs to get target graph information\n" +
+    "2. Use get_node_details to view node's resource associations\n" +
+    "3. Confirm unlinking won't affect other functionality\n" +
+    "4. Record changes for potential re-association\n\n" +
+    "Important notes:\n" +
+    "- Only removes association, does not delete resource\n" +
+    "- Resource can still be used by other nodes\n" +
+    "- Association can be re-established at any time\n\n" +
+    "Return data:\n" +
+    "- data: Operation result\n" +
+    "  * resourceId: Resource ID\n" +
+    "  * nodeId: Node ID\n" +
+    "  * unlinkedAt: Time when association was removed",
   inputSchema: {
     type: "object",
     properties: {
       graphId: {
         type: "string",
-        description: "图谱ID，必须从list_graphs的返回数据中获取"
+        description: "Graph ID, must be obtained from list_graphs return data"
       },
       nodeId: {
         type: "string",
-        description: "节点ID，必须从list_graphs的nodes数组中获取"
+        description: "Node ID, must be obtained from nodes array in list_graphs"
       },
       resourceId: {
         type: "string",
-        description: "要解除关联的资源ID，必须从get_node_details的resources数组中获取"
+        description: "Resource ID to unlink, must be obtained from resources array in get_node_details"
       }
     },
     required: ["graphId", "nodeId", "resourceId"]
