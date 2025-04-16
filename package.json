@@ -1,0 +1,63 @@
+{
+  "name": "@aiuluna/knowledge-graph-mcp",
+  "version": "0.0.1",
+  "description": "A Model Context Protocol (MCP) service for managing and visualizing knowledge graphs",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "knowledge-graph-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "vite build && chmod +x dist/index.js",
+    "start": "node dist/index.js",
+    "dev": "vite build --watch",
+    "dev:start": "node --loader ts-node/esm src/index.ts",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "knowledge-graph",
+    "mcp",
+    "visualization",
+    "graph",
+    "model-context-protocol"
+  ],
+  "author": "aiuluna",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aiuluna/knowledge-graph-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aiuluna/knowledge-graph-mcp/issues"
+  },
+  "homepage": "https://github.com/aiuluna/knowledge-graph-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "cross-env": "^7.0.3",
+    "uuid": "^9.0.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "@types/uuid": "^9.0.8",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.38.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4",
+    "vitest": "^1.3.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=7.0.0"
+  }
+}
