@@ -2,6 +2,7 @@
 
 A Model Context Protocol (MCP) service for creating, managing, analyzing, and visualizing knowledge graphs. This service fully complies with the MCP standard and seamlessly integrates with MCP-compatible AI assistants (such as Claude).
 
+[![smithery badge](https://smithery.ai/badge/@aiuluna/knowledge-graph-mcp)](https://smithery.ai/server/@aiuluna/knowledge-graph-mcp)
 [中文文档](./README.zh-CN.md)
 
 ## Core Features
@@ -12,6 +13,14 @@ A Model Context Protocol (MCP) service for creating, managing, analyzing, and vi
 * **Version Status**: Support for multiple status management including draft, published, and archived
 
 ## Installation & Configuration
+
+### Installing via Smithery
+
+To install knowledge-graph-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@aiuluna/knowledge-graph-mcp):
+
+```bash
+npx -y @smithery/cli install @aiuluna/knowledge-graph-mcp --client claude
+```
 
 ### Requirements
 - Node.js >= 16.0.0
@@ -243,4 +252,3 @@ The service uses a standard error handling mechanism. All errors are logged to t
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
