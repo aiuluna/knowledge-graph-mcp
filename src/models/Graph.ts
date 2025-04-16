@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto';
 
 // 图的状态枚举
 export const GraphStatus = {

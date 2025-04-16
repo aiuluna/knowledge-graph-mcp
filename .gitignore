@@ -32,3 +32,6 @@ pnpm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# Cursor
+.cursor
