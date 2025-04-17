@@ -1,6 +1,6 @@
 {
   "name": "@aiuluna/knowledge-graph-mcp",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Model Context Protocol (MCP) service for managing and visualizing knowledge graphs",
   "type": "module",
   "main": "dist/index.js",
