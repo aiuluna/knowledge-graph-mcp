@@ -47,7 +47,25 @@ const CREATE_GRAPH_TOOL: Tool = {
 
 const ADD_NODE_TOOL: Tool = {
   name: "add_node",
-  description: "Add a node to the knowledge graph. Nodes are the basic units of the graph, and different types of graphs support different types of nodes.",
+  description: "Add a node to the knowledge graph. Nodes are the basic units of the graph, and different types of graphs support different types of nodes.\n" +
+    "Use cases:\n" +
+    "1. Create component or module nodes in topology graphs\n" +
+    "2. Add event or decision nodes in timeline graphs\n" +
+    "3. Create requirement or feature nodes in requirement documents\n" +
+    "4. Build concept hierarchies in knowledge bases\n\n" +
+    "Usage recommendations:\n" +
+    "1. First create the graph using create_graph\n" +
+    "2. Select the appropriate node type based on graph type\n" +
+    "3. Provide meaningful names and descriptions\n" +
+    "4. Link related files when applicable\n" +
+    "5. Add metadata for additional structured information\n\n" +
+    "Return data:\n" +
+    "- data: Created node information\n" +
+    "  * id: Node ID\n" +
+    "  * type: Node type\n" +
+    "  * name: Node name\n" +
+    "  * description: Node description\n" +
+    "  * createdAt: Creation time",
   inputSchema: {
     type: "object",
     properties: {
@@ -68,25 +86,25 @@ const ADD_NODE_TOOL: Tool = {
 
 const ADD_EDGE_TOOL: Tool = {
   name: "add_edge",
-  description: "在知识图谱中添加边，连接两个节点以构建关系网络。边表示节点之间的关系类型，如依赖、包含、关联等。\n" +
-    "使用前提：\n" +
-    "1. 必须先创建图谱（使用create_graph）\n" +
-    "2. 必须已经创建了源节点和目标节点\n" +
-    "3. 边的类型必须与图谱类型匹配\n\n" +
-    "使用建议：\n" +
-    "1. 先使用list_graphs获取图谱和节点信息\n" +
-    "2. 确认源节点和目标节点都存在且类型匹配\n" +
-    "3. 根据图谱类型选择合适的边类型\n" +
-    "4. 为边添加有意义的标签，帮助理解关系\n" +
-    "5. 如果关系有强弱之分，可以通过weight参数表示\n\n" +
-    "返回数据：\n" +
-    "- data: 新创建的边信息\n" +
-    "  * id: 边ID\n" +
-    "  * type: 边类型\n" +
-    "  * sourceId: 源节点ID\n" +
-    "  * targetId: 目标节点ID\n" +
-    "  * label: 边标签\n" +
-    "  * weight: 边权重",
+  description: "Add edges in the knowledge graph, connecting two nodes to build a relationship network. Edges represent relationship types between nodes, such as dependencies, containment, associations, etc.\n" +
+    "Prerequisites:\n" +
+    "1. Must first create a graph (using create_graph)\n" +
+    "2. Source and target nodes must already exist\n" +
+    "3. Edge type must match the graph type\n\n" +
+    "Usage recommendations:\n" +
+    "1. First use list_graphs to get graph and node information\n" +
+    "2. Confirm both source and target nodes exist and their types match\n" +
+    "3. Choose appropriate edge type based on graph type\n" +
+    "4. Add meaningful labels to edges to help understand relationships\n" +
+    "5. If relationships have varying strengths, use the weight parameter\n\n" +
+    "Return data:\n" +
+    "- data: Newly created edge information\n" +
+    "  * id: Edge ID\n" +
+    "  * type: Edge type\n" +
+    "  * sourceId: Source node ID\n" +
+    "  * targetId: Target node ID\n" +
+    "  * label: Edge label\n" +
+    "  * weight: Edge weight",
   inputSchema: {
     type: "object",
     properties: {
@@ -94,7 +112,7 @@ const ADD_EDGE_TOOL: Tool = {
       type: {
         type: "string",
         enum: Object.values(EdgeType),
-        description: "边类型。组件拓扑图:depends_on/imports/extends/implements/calls/references/contains/associated_with, 时间线图谱:precedes/leads_to/created_by/modified_by, 变更日志:precedes/transforms_to/created_by/modified_by/part_of, 需求文档:implements_req/depends_on/part_of/created_by/modified_by"
+        description: "Edge type. Topology diagram:depends_on/imports/extends/implements/calls/references/contains/associated_with, Timeline graph:precedes/leads_to/created_by/modified_by, Change log:precedes/transforms_to/created_by/modified_by/part_of, Requirements document:implements_req/depends_on/part_of/created_by/modified_by"
       },
       sourceId: { type: "string" },
       targetId: { type: "string" },
